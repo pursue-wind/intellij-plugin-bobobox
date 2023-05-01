@@ -1,0 +1,15 @@
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+public class App {
+
+    public void test() {
+        <spot>车辆控制系统</spot>$key
+
+        <spot>vehicleControlSystem</spot>$key
+
+        <spot>"vehicle Control System"</spot>$key
+    }
+
+}
+

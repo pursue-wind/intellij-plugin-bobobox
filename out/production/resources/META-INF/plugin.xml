@@ -1,0 +1,37 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin require-restart="true">
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>io.github.pursuewind.pursue</id>
+    <!-- Public plugin name should be written in Title Case. Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Pursue</name>
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="pursue_c@163.com" url="https://pursue.pub">pursue</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+
+        <applicationConfigurable parentId="appearance"
+                                 instance="io.github.pursuewind.intellij.plugin.inline.ui.MyConfigurable"
+                                 displayName="⚙  InLine"/>
+        <applicationService serviceImplementation="io.github.pursuewind.intellij.plugin.inline.data.MySettingsService"/>
+
+        <notificationGroup displayType="BALLOON" id="Setter Postfix Tip" bundle="group"
+                           key="notification.group.tip.name"/>
+        <notificationGroup displayType="STICKY_BALLOON" id="Setter Postfix Error" bundle="group"
+                           key="notification.group.error.name"/>
+
+        <codeInsight.template.postfixTemplateProvider language="JAVA"
+                                                      implementationClass="io.github.pursuewind.intellij.plugin.generate.GeneratePostfixTemplateProvider"/>
+        <codeInsight.template.postfixTemplateProvider language="JAVA"
+                                                      implementationClass="io.github.pursuewind.intellij.plugin.generate.LogPostfixTemplateProvider"/>
+
+    </extensions>
+
+    <projectListeners>
+        <listener class="io.github.pursuewind.intellij.plugin.inline.FileOpenedListener"
+                  topic="com.intellij.openapi.fileEditor.FileOpenedSyncListener"/>
+    </projectListeners>
+</idea-plugin>
