@@ -8,7 +8,6 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.psi.*
-import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.javadoc.PsiDocComment
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.PsiShortNamesCache
@@ -32,14 +31,14 @@ abstract class BasePostfixTemplateProvider : PostfixTemplateProvider {
 class GeneratePostfixTemplateProvider : BasePostfixTemplateProvider() {
     override fun getTemplates() = mutableSetOf<PostfixTemplate>(
         // get set builder
-        GenerateAllGetter(),
-        GeneratorAllGetterNoSuper(),
-        GeneratorSetter(),
-        GeneratorSetterLombokChain(),
-        GeneratorSetterNoDefault(),
-        GeneratorSetterNoSuper(),
-        GeneratorBuilder(),
-        GeneratorGetSet(),
+        GenerateGetter(),
+        GenerateGetterNoSuper(),
+        GenerateSetter(),
+        GenerateSetterLombokChain(),
+        GenerateSetterNoDefault(),
+        GenerateSetterNoSuper(),
+        GenerateBuilder(),
+        GenerateGetSet(),
         //
         ToCamelCaseTemplate(),
         ToUnderscoreTemplate(),
@@ -61,9 +60,7 @@ class LogPostfixTemplateProvider : BasePostfixTemplateProvider() {
         val moduleForPsiElement = ModuleUtilCore.findModuleForPsiElement(element) ?: return false
         return PsiShortNamesCache.getInstance(project)
             .getClassesByName("Slf4j", GlobalSearchScope.moduleRuntimeScope(moduleForPsiElement, false))
-            .any {
-                it.qualifiedName == "lombok.extern.slf4j.Slf4j"
-            }
+            .any { it.qualifiedName == "lombok.extern.slf4j.Slf4j" }
     }
 
     override fun afterExpand(file: PsiFile, editor: Editor) {
@@ -76,28 +73,34 @@ class LogPostfixTemplateProvider : BasePostfixTemplateProvider() {
             val slf4jAnnotation = psiClass.getAnnotation("lombok.extern.slf4j.Slf4j")
             if (checkLombokExist(project, psiClass)) {
                 if (slf4jAnnotation == null) {
-                    WriteCommandAction.runWriteCommandAction(project, "add lombok anno", null, {
-                        psiClass.firstChild?.let { psiElement ->
-                            // Add Slf4j import
-                            file.importList?.let { its ->
-                                if (its.children.map { it.text }.any { it.contains("lombok.extern.slf4j") }) return@let
-                                val elementFactory = JavaPsiFacade.getElementFactory(project)
-                                val importStatement =
-                                    elementFactory.createImportStatementOnDemand("lombok.extern.slf4j")
-                                its.add(importStatement)
+                    WriteCommandAction.runWriteCommandAction(
+                        project,
+                        "add lombok anno",
+                        null, {
+                            psiClass.firstChild?.let { psiElement ->
+                                // Add Slf4j import
+                                file.importList?.let { its ->
+                                    if (its.children.map { it.text }
+                                            .any { it.contains("lombok.extern.slf4j") }) return@let
+                                    val elementFactory = JavaPsiFacade.getElementFactory(project)
+                                    val importStatement =
+                                        elementFactory.createImportStatementOnDemand("lombok.extern.slf4j")
+                                    its.add(importStatement)
+                                }
+                                // Add Lombok annotation
+//                            val createAnnotationFromText = psiElementFactory.createAnnotationFromText("@Slf4j\n", psiClass)
+                                val createAnnotationFromText =
+                                    psiElementFactory.createStatementFromText("@Slf4j\n", psiClass)
+
+                                if (psiElement is PsiDocComment) {
+                                    val nextSibling = psiElement.nextSibling
+                                    psiClass.addBefore(createAnnotationFromText, nextSibling)
+                                } else {
+                                    psiClass.addBefore(createAnnotationFromText, psiElement)
+                                }
                             }
-                            // Add Lombok annotation
-                            val createAnnotationFromText =
-                                psiElementFactory.createAnnotationFromText("@Slf4j\n", psiClass)
-                            if (psiElement is PsiDocComment) {
-                                psiClass.addAfter(createAnnotationFromText, psiElement)
-                            } else {
-                                psiClass.addBefore(createAnnotationFromText, psiElement)
-                            }
-                        }
-                    }, file)
-                    val manager = psiClass.manager
-                    CodeStyleManager.getInstance(manager).reformat(psiClass)
+                        }, file
+                    )
                 }
             } else {
 
@@ -113,7 +116,7 @@ class LogPostfixTemplateProvider : BasePostfixTemplateProvider() {
                     psiClass.firstChild?.let { psiElement ->
                         // import org.slf4j.Logger; import org.slf4j.LoggerFactory;
                         file.importList?.let { its ->
-                            if (its.children.map { it.text }.any { it.contains("org.slf4j") }) return@let
+                            if (its.children.map { it.text }.any { it.contains("org.slf4j") }) return
 
                             val importStatement = elementFactory.createImportStatementOnDemand("org.slf4j")
                             its.add(importStatement)

@@ -1,5 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.getset
 
+import com.intellij.psi.PsiArrayType
+import com.intellij.psi.PsiEnumConstant
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiParameter
 import com.intellij.psi.impl.source.PsiClassReferenceType
@@ -11,8 +13,8 @@ abstract class AbsSetGenerator : AbsGetSetCodeGenerator() {
     protected lateinit var _method: PsiMethod
 
     protected open fun generateSetMethodStr(): String = "${postfixData.psiElementName}.${_method.name}"
-    protected open var assemble: (String, String) -> String =
-        { method, args -> "$method($args);" }
+    protected open var assemble: (String, String) -> String = { method, args -> "$method($args);" }
+
 
     override var method2Code: (PsiMethod) -> String = { method ->
         this._method = method
@@ -28,10 +30,30 @@ abstract class AbsSetGenerator : AbsGetSetCodeGenerator() {
             val typeName = psiType.presentableText
             // if PsiClassReferenceType, get from default map else new
             val typeNameLower = typeName.lowercase(Locale.getDefault())
-            JavaTypeMapping.baseTypeMapping[typeNameLower] ?: (psiType as? PsiClassReferenceType)?.let {
-                it.resolve()?.let { psiCls ->
-                    val qualifiedName = psiCls.qualifiedName
-                    JavaTypeMapping.mapping[qualifiedName] ?: "new ${it.canonicalText}()"
+            JavaTypeMapping.baseTypeMapping[typeNameLower] ?: when (psiType) {
+                is PsiClassReferenceType -> psiClassReferenceType2Code(psiType)
+                is PsiArrayType -> {
+                    val componentType = psiType.componentType
+                    val innerCode = (componentType as? PsiClassReferenceType)?.let { psiClassReferenceType2Code(it) }
+                    "new ${psiType.canonicalText}{$innerCode}"
+                }
+
+                else -> ""
+            }
+        } ?: ""
+    }
+    protected open var psiClassReferenceType2Code: (PsiClassReferenceType) -> String = {
+        it.resolve()?.let { psiCls ->
+            val qualifiedName = psiCls.qualifiedName
+            when {
+                psiCls.isEnum -> {
+                    val firstEnumName = psiCls.allFields.filterIsInstance<PsiEnumConstant>().firstOrNull()?.name
+                    "${it.canonicalText}.${firstEnumName}"
+                }
+
+                else -> {
+                    val extraStr = if (psiCls.isInterface) "{\n //TODO \n}" else ""
+                    JavaTypeMapping.mapping[qualifiedName] ?: "new ${it.canonicalText}()$extraStr"
                 }
             }
         } ?: ""

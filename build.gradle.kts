@@ -9,7 +9,6 @@ plugins {
     id("org.jetbrains.changelog") version "2.0.0"
     kotlin("jvm") version "1.7.10"
 
-
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "0.1.13"
     // Gradle Kover Plugin
@@ -45,25 +44,10 @@ kotlin {
 }
 
 dependencies {
-    implementation("junit:junit:4.13.2")
-//    implementation("org.assertj:assertj-core:3.24.2")
-//    implementation("uk.com.robust-it:cloning:1.9.12")
-//    implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.0")
-//    implementation("org.yaml:snakeyaml:2.0")
-//    implementation("org.apache.commons:commons-lang3:3.12.0")
-//    implementation("commons-codec:commons-codec:1.15")
-//    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
-//    implementation("com.fasterxml.jackson.core:jackson-core:2.14.2")
-//    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
-//    implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.2")
-//    implementation("com.youbenzi:MDTool:1.2.4")
-//    implementation("org.freemarker:freemarker:2.3.31")
-//
-//    implementation("org.projectlombok:lombok:1.18.26")
-//    annotationProcessor("org.projectlombok:lombok:1.18.26")
-
+    implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.0")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.projectlombok:lombok:1.18.26")
     implementation("com.google.code.gson:gson:2.10.1")
-
 }
 tasks {
     wrapper {

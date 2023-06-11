@@ -11,13 +11,6 @@
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-
-
-        <applicationConfigurable parentId="appearance"
-                                 instance="io.github.pursuewind.intellij.plugin.inline.ui.MyConfigurable"
-                                 displayName="⚙  InLine"/>
-        <applicationService serviceImplementation="io.github.pursuewind.intellij.plugin.inline.data.MySettingsService"/>
-
         <notificationGroup displayType="BALLOON" id="Setter Postfix Tip" bundle="group"
                            key="notification.group.tip.name"/>
         <notificationGroup displayType="STICKY_BALLOON" id="Setter Postfix Error" bundle="group"
@@ -29,9 +22,24 @@
                                                       implementationClass="io.github.pursuewind.intellij.plugin.generate.LogPostfixTemplateProvider"/>
 
     </extensions>
-
-    <projectListeners>
-        <listener class="io.github.pursuewind.intellij.plugin.inline.FileOpenedListener"
-                  topic="com.intellij.openapi.fileEditor.FileOpenedSyncListener"/>
-    </projectListeners>
+    <actions>
+        <action id="bobobox.CreateSequenceAction" class="io.github.pursuewind.intellij.plugin.generate.increment.CreateSequenceAction" text="CreateSequenceAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt G"/>
+        </action>
+        <action id="bobobox.IncrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.IncrementAction" text="IncrementAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt UP"/>
+        </action>
+        <action id="bobobox.DecrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.DecrementAction" text="DecrementAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt DOWN"/>
+        </action>
+        <action id="bobobox.ToCamelCaseAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToCamelCaseAction" text="ToCamelCaseAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt Y"/>
+        </action>
+        <action id="bobobox.ToUnderscoreAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToUnderscoreAction" text="ToUnderscoreAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt U"/>
+        </action>
+        <action id="bobobox.JustTransAction" class="io.github.pursuewind.intellij.plugin.generate.trans.JustTransAction" text="JustTransAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt 7"/>
+        </action>
+    </actions>
 </idea-plugin>

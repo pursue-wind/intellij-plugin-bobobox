@@ -1,1 +1,1 @@
-rootProject.name = "intellij-plugin-bobobox"
+rootProject.name = "intellij-plugin-shitbox"

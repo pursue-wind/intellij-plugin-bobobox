@@ -10,16 +10,15 @@ import org.apache.commons.lang.StringUtils
  * @date 2021/10/1
  */
 
-class GeneratorAllGetterNoSuper : AbsVariableGenerateTemplate(PostfixEnum.GET_NO_SUPER)
-class GenerateAllGetter : AbsVariableGenerateTemplate(PostfixEnum.GET)
+class GenerateGetterNoSuper : AbsVariableGenerateTemplate(PostfixEnum.GET_NO_SUPER)
+class GenerateGetter : AbsVariableGenerateTemplate(PostfixEnum.GET)
 
+class GenerateSetter : AbsVariableGenerateTemplate(PostfixEnum.SET)
+class GenerateSetterLombokChain : AbsVariableGenerateTemplate(PostfixEnum.SET_LOMBOK_CHAIN)
+class GenerateSetterNoDefault : AbsVariableGenerateTemplate(PostfixEnum.SET_NO_DEFAULT)
+class GenerateSetterNoSuper : AbsVariableGenerateTemplate(PostfixEnum.SET_NO_SUPER)
 
-class GeneratorSetter : AbsVariableGenerateTemplate(PostfixEnum.SET)
-class GeneratorSetterLombokChain : AbsVariableGenerateTemplate(PostfixEnum.SET_LOMBOK_CHAIN)
-class GeneratorSetterNoDefault : AbsVariableGenerateTemplate(PostfixEnum.SET_NO_DEFAULT)
-class GeneratorSetterNoSuper : AbsVariableGenerateTemplate(PostfixEnum.SET_NO_SUPER)
-
-class GeneratorBuilder : AbsVariableGenerateTemplate(PostfixEnum.BUILDER, { check(it) }) {
+class GenerateBuilder : AbsVariableGenerateTemplate(PostfixEnum.BUILDER, { check(it) }) {
     companion object {
         private fun check(psiElement: PsiElement): Boolean {
             if (psiElement is PsiJavaToken) {
@@ -38,7 +37,7 @@ class GeneratorBuilder : AbsVariableGenerateTemplate(PostfixEnum.BUILDER, { chec
     }
 }
 
-class GeneratorGetSet : AbsVariableGenerateTemplate(PostfixEnum.GET_SET, { check(it) }) {
+class GenerateGetSet : AbsVariableGenerateTemplate(PostfixEnum.GET_SET, { check(it) }) {
     companion object {
         private fun check(psiElement: PsiElement): Boolean {
             when (psiElement) {

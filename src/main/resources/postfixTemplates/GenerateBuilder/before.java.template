@@ -1,33 +1,21 @@
 public class App {
     public static void main(String[] args) {
-        TestGetterSetter t = new TestGetterSetter();
-        TestGetterSetter2 t2 = new TestGetterSetter2();
-        <spot>t2.setId(t.getId());</spot>$key
+        <spot>TestGetterSetter.builder()</spot>$key
     }
 }
 
-
 @Data
-@Accessors(chain = true)
-class TestGetterSetter2 extends BaseEntity {
-    private Integer id;
-    private String userName;
-    private List<String> userNames;
-    private Map<String, LocalDateTime> map;
-    private Set<String> set;
-    private List<org.example.TestGetterSetter.User> users;
-    private Function<Integer, String> func;
+public class BaseEntity {
+    private Integer uid;
+    private String uName;
 }
 
 @Data
-@Accessors(chain = true)
+@Builder
 public class TestGetterSetter extends BaseEntity {
     public enum TestEnum {ONE, TWO}
 
     @Data
-    @AllArgsConstructor(staticName = "of")
-    @Builder
-    @NoArgsConstructor
     public static class User {
         private Integer id;
         private String userName;

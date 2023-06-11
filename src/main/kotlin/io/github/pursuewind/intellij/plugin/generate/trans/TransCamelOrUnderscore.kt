@@ -1,10 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.trans
 
-import com.intellij.openapi.application.ApplicationManager
 import io.github.pursuewind.intellij.plugin.generate.util.Http
 import io.github.pursuewind.intellij.plugin.generate.AbsCodeGenerator
-import java.util.concurrent.Callable
-import java.util.concurrent.TimeUnit
 
 
 // 下划线转驼峰 Underline to CamelCase _cc
@@ -33,6 +30,8 @@ val toUnderscore: (String) -> String = { s ->
         .replace(Regex("[ -]"), "_")
         .lowercase()
 }
+
+val doNothingStr: (String) -> String = { it }
 
 fun chineseCheck(text: String, func: (String) -> String): String {
     // 判断文本语言类型
@@ -73,13 +72,7 @@ data class YuoDaoTranslationResponse(
 
 
 fun youDaoRequest(chinese: String): String {
-    var future = ApplicationManager.getApplication().executeOnPooledThread(
-        Callable<String> {
-            val url = "http://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${chinese}"
-            val resp = Http.get<YuoDaoTranslationResponse>(url)
-            if (resp.errorCode == 0) resp.translateResult.first().first().tgt else ""
-        }
-    )
-
-    return future.get(700, TimeUnit.MILLISECONDS)
+    val url = "http://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${chinese}"
+    val resp = Http.get<YuoDaoTranslationResponse>(url)
+    return if (resp.errorCode == 0) resp.translateResult.first().first().tgt else ""
 }

@@ -1,31 +1,55 @@
-import lombok.Data;
-
 public class App {
-
-    public void test() {
-        Foo src = new Foo();
-        Foo dest = new Foo();
-        <spot>dest.setTestInt(src.getTestInt());
-        dest.setTestLong(src.getTestLong());
-        dest.setTestFloat(src.getTestFloat());
-        dest.setTestDouble(src.getTestDouble());
-        dest.setTestBoolean(src.getTestBoolean());</spot>
-
+    public static void main(String[] args) {
+        TestGetterSetter t = new TestGetterSetter();
+        TestGetterSetter2 t2 = new TestGetterSetter2();
+        t2.setId(t.getId());
+        t2.setUserName(t.getUserName());
+        t2.setUserNames(t.getUserNames());
+        t2.setMap(t.getMap());
+        t2.setSet(t.getSet());
+        t2.setUsers(t.getUsers());
+        t2.setFunc(t.getFunc());
+        t2.setUid();
+        t2.setUName();
     }
+}
 
+
+@Data
+@Accessors(chain = true)
+class TestGetterSetter2 extends BaseEntity {
+    private Integer id;
+    private String userName;
+    private List<String> userNames;
+    private Map<String, LocalDateTime> map;
+    private Set<String> set;
+    private List<org.example.TestGetterSetter.User> users;
+    private Function<Integer, String> func;
 }
 
 @Data
-class Foo {
+@Accessors(chain = true)
+public class TestGetterSetter extends BaseEntity {
+    public enum TestEnum {ONE, TWO}
 
-    private Integer testInt;
+    @Data
+    @AllArgsConstructor(staticName = "of")
+    @Builder
+    @NoArgsConstructor
+    public static class User {
+        private Integer id;
+        private String userName;
+    }
 
-    private Long testLong;
-
-    private Float testFloat;
-
-    private Double testDouble;
-
-    private Boolean testBoolean;
-
+    private Integer id;
+    private String userName;
+    private List<String> userNames;
+    private Map<String, LocalDateTime> map;
+    private Set<String> set;
+    private User user;
+    private TestEnum testEnum;
+    private TestEnum[] testEnums;
+    private User[] userArr;
+    private List<User> users;
+    private Function<Integer, String> func;
 }

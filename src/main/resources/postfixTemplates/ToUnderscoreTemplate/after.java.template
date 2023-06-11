@@ -2,7 +2,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 public class App {
-
     public void test() {
         <spot>vehicle_control_system</spot>
 
@@ -10,6 +9,5 @@ public class App {
 
         <spot>"vehicle_control_system"</spot>$key
     }
-
 }
 

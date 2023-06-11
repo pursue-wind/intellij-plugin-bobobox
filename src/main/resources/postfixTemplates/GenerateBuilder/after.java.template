@@ -1,0 +1,51 @@
+public class App {
+    public static void main(String[] args) {
+        TestGetterSetter.builder()
+                .id(0)
+                .userName("")
+                .userNames(new ArrayList<>())
+                .map(new HashMap<>(2))
+                .set(new HashSet<>())
+                .user(new User())
+                .testEnum(TestEnum.ONE)
+                .testEnums(new TestEnum[]{TestEnum.ONE})
+                .userArr(new User[]{new User()})
+                .users(new ArrayList<>())
+                .func(new Function<Integer, String>() {
+                    //TODO
+                })
+                .uid(0)
+                .uName("")
+                .build();
+    }
+}
+
+@Data
+public class BaseEntity {
+    private Integer uid;
+    private String uName;
+}
+
+@Data
+@Builder
+public class TestGetterSetter extends BaseEntity {
+    public enum TestEnum {ONE, TWO}
+
+    @Data
+    public static class User {
+        private Integer id;
+        private String userName;
+    }
+
+    private Integer id;
+    private String userName;
+    private List<String> userNames;
+    private Map<String, LocalDateTime> map;
+    private Set<String> set;
+    private User user;
+    private TestEnum testEnum;
+    private TestEnum[] testEnums;
+    private User[] userArr;
+    private List<User> users;
+    private Function<Integer, String> func;
+}
