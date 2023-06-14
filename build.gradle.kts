@@ -64,8 +64,6 @@ tasks {
         untilBuild.set(properties("pluginUntilBuild"))
 
         val myReadMe = file("README.md").readText()
-                .replace("<kbd>", " `")
-                .replace("</kbd>", "` ")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription.set(
@@ -78,8 +76,8 @@ tasks {
                     }
                     subList(indexOf(start) + 1, indexOf(end))
                 }.joinToString("\n")
-                    .replace("example.png", "mini_example.png")
-                    .let { org.jetbrains.changelog.markdownToHTML(it) }
+                        .replace("example.png", "mini_example.png")
+                        .let { org.jetbrains.changelog.markdownToHTML(it) }
         )
 
         changeNotes.set(

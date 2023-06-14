@@ -1,4 +1,5 @@
 # Generator
+<!-- Plugin description -->
 ### 顺序数 
 #### 使用方式（快捷键）
 - 生成（CTRL + SHIFT + ALT + G）
@@ -66,5 +67,9 @@
 - _gset 生成get和set方法
 
 ![get](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/d9b9b4ed-21e0-40e2-a943-0f279cf7e263)
+<!-- Plugin description end -->
 
-
+### Change notes:
+<!-- Change notes -->
+* __1.0__ - Release
+<!-- Change notes end -->
