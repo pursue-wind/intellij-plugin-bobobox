@@ -8,7 +8,7 @@ abstract class AbsGetCodeGenerator : AbsGetSetCodeGenerator() {
     override var method2Code: (PsiMethod) -> String = g@{ method ->
         val expressionName = postfixData.psiElementName
         val methodName = method.name
-        val prefix = if (checkGetMethodPrefix(method)) "is" else "get"
+        val prefix = if (checkGetMethodPrefix(method)) IS_METHOD_PREFIX else GET_METHOD_PREFIX
         val varName = methodName.replaceFirst(prefix, "").firstCharToLowerCase()
         val psiType = method.returnType ?: return@g "$expressionName.$methodName();"
 

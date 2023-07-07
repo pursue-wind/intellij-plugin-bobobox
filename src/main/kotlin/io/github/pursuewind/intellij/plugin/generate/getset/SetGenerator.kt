@@ -86,7 +86,7 @@ open class BuilderCodeGenerator : AbsSetGenerator() {
     override fun beforeAppend() = postfixData.psiElementName + ".builder()"
     override fun afterAppend() = "\n.build();"
     override var assemble: (String, String) -> String = { method, args -> "$method($args)" }
-    override fun generateSetMethodStr(): String = "\n.${_method.name.replace("set", "").firstCharToLowerCase()}"
+    override fun generateSetMethodStr(): String = "\n.${_method.name.replace(SET_METHOD_PREFIX, "").firstCharToLowerCase()}"
 }
 
 
@@ -104,8 +104,8 @@ object GetSetCodeGenerator : AbsSetGenerator() {
         val setMethodMap = argsGetMethodList.associateBy { it.name }
 
         parameters.firstOrNull()?.let {
-            val prefix = if (checkGetMethodPrefix(_method)) "is" else "get"
-            val buildGetMethodName = _method.name.replaceFirst("set", prefix)
+            val prefix = if (checkGetMethodPrefix(_method)) IS_METHOD_PREFIX else GET_METHOD_PREFIX
+            val buildGetMethodName = _method.name.replaceFirst(SET_METHOD_PREFIX, prefix)
 
             setMethodMap[buildGetMethodName]?.let { gm -> "$argsTypeName.${gm.name}()" }
         } ?: ""
