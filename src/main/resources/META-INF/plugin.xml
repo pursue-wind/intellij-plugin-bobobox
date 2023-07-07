@@ -3,9 +3,9 @@
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>io.github.pursuewind.pursue</id>
     <!-- Public plugin name should be written in Title Case. Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Pursue</name>
+    <name>BoboBox</name>
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="pursue_c@163.com" url="https://pursue.pub">pursue</vendor>
+    <vendor email="pursue_c@163.com" url="https://doc.pursue.pub">pursue</vendor>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
