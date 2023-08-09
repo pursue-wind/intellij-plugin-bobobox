@@ -23,23 +23,26 @@
 
     </extensions>
     <actions>
+        <action id="bobobox.Row2ColAction" class="io.github.pursuewind.intellij.plugin.generate.increment.Row2ColAction" text="Row2ColAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt R"/>
+        </action>
         <action id="bobobox.CreateSequenceAction" class="io.github.pursuewind.intellij.plugin.generate.increment.CreateSequenceAction" text="CreateSequenceAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt G"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
         </action>
         <action id="bobobox.IncrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.IncrementAction" text="IncrementAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt UP"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt UP"/>
         </action>
         <action id="bobobox.DecrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.DecrementAction" text="DecrementAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt DOWN"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt DOWN"/>
         </action>
         <action id="bobobox.ToCamelCaseAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToCamelCaseAction" text="ToCamelCaseAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt Y"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt Y"/>
         </action>
         <action id="bobobox.ToUnderscoreAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToUnderscoreAction" text="ToUnderscoreAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt U"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt U"/>
         </action>
         <action id="bobobox.JustTransAction" class="io.github.pursuewind.intellij.plugin.generate.trans.JustTransAction" text="JustTransAction">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt 7"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 7"/>
         </action>
     </actions>
 </idea-plugin>

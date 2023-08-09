@@ -3,7 +3,6 @@ package io.github.pursuewind.intellij.plugin.generate.increment
 import io.github.pursuewind.intellij.plugin.generate.increment.A.Companion.findLast
 import io.github.pursuewind.intellij.plugin.generate.increment.A.Companion.findNext
 import io.github.pursuewind.intellij.plugin.generate.increment.A.Companion.strEnumMap
-import io.github.pursuewind.intellij.plugin.generate.increment.UniversalNumber.Companion.increment
 import org.apache.commons.lang3.ArrayUtils
 
 
@@ -217,16 +216,4 @@ class UniversalNumber(textPart: String) {
             return UniversalNumber(s).decrement()
         }
     }
-}
-
-
-fun main() {
-
-//    val findNext = findNext("周五")
-//    println(findNext)
-
-    val s = increment("-2,-4")
-    println(s)
-
-
 }
