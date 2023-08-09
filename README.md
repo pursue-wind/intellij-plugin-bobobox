@@ -1,10 +1,19 @@
 # Generator
 <!-- Plugin description -->
+### 行转列
+#### 使用方式（快捷键）
+- CTRL + ALT + R
+```
+  a,b,c      a,1,2
+  1,2,3  ->  b,2,4
+  2,4,6      c,3,6
+```
+
 ### 顺序数 
 #### 使用方式（快捷键）
-- 生成（CTRL + SHIFT + ALT + G）
-- ↗ （CTRL + SHIFT + ALT + ⬆ ）
-- ↘ （CTRL + SHIFT + ALT + ⬇ ）
+- 生成（CTRL + ALT + G）
+- ↗ （CTRL + ALT + ⬆ ）
+- ↘ （CTRL + ALT + ⬇ ）
 
 #### 支持范围
 - 数字
@@ -33,9 +42,9 @@
 
 ![trans](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/0e3948eb-168b-4451-a9dd-dc00608df25e)
 #### 使用方式（快捷键）
-- CTRL SHIFT ALT Y 转驼峰
-- CTRL SHIFT ALT U 转下划线
-- CTRL SHIFT ALT 7 仅翻译
+- CTRL ALT Y 转驼峰
+- CTRL ALT U 转下划线
+- CTRL ALT 7 仅翻译
 
 ![trans2](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/135fb9d2-b04e-4937-af0c-696663ca3980)
 
