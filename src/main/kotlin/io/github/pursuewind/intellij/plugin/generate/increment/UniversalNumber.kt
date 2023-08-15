@@ -100,7 +100,7 @@ class UniversalNumber(textPart: String) {
                 if (chars[0] == '+') {
                     chars[0] = '-'
                 } else {
-                    chars = ArrayUtils.add(chars, 0, '-')
+                    chars = ArrayUtils.insert(0, chars, '-')
                 }
             }
         } else {
@@ -135,9 +135,9 @@ class UniversalNumber(textPart: String) {
     private fun addExtraPlace(index: Int) {
         if (separator.needSeparator()) {
             val character = separator.guessSeparator()
-            character?.let { chars = ArrayUtils.add(chars, index, it) }
+            character?.let { chars = ArrayUtils.insert(index, chars, it) }
         }
-        chars = ArrayUtils.add(chars, index, '1')
+        chars = ArrayUtils.insert(index, chars, '1')
     }
 
     private fun shiftDown(start: Int) {

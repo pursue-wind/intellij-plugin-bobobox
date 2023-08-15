@@ -1,6 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.increment
 
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.CaretModel
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.SelectionModel
@@ -10,11 +11,11 @@ import io.github.pursuewind.intellij.plugin.generate.increment.UniversalNumber.C
 import org.apache.commons.lang3.StringUtils
 import java.util.regex.Pattern
 
-class IncrementAction (setupHandler: Boolean = true) : MyEditorAction(null) {
+class IncrementAction(setupHandler: Boolean = true) : MyEditorAction(null) {
     init {
         if (setupHandler) {
             setupHandler(object : EditorWriteActionHandler(true) {
-                override fun executeWriteAction(editor: Editor, dataContext: DataContext) {
+                override fun executeWriteAction(editor: Editor, caret: Caret?, dataContext: DataContext) {
 //					MyApplicationService.setAction(getActionClass());
 
                     // Column mode not supported
@@ -88,8 +89,8 @@ class IncrementAction (setupHandler: Boolean = true) : MyEditorAction(null) {
          * @param input The character sequence to be split
          * @return The array of strings computed by splitting the input around matches of this pattern
          */
-		@JvmStatic
-		fun splitPreserveAllTokens(input: String, regex: String?): Array<String> {
+        @JvmStatic
+        fun splitPreserveAllTokens(input: String, regex: String?): Array<String> {
             var index = 0
             val p = Pattern.compile(regex)
             val result = ArrayList<String>()

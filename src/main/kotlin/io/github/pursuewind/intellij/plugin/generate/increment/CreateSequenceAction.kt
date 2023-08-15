@@ -14,7 +14,7 @@ class CreateSequenceAction(setupHandler: Boolean = true) : MyEditorAction(null) 
     init {
         if (setupHandler) {
             setupHandler(object : EditorWriteActionHandler(false) {
-                override fun executeWriteAction(editor: Editor, dataContext: DataContext) {
+                override fun executeWriteAction(editor: Editor, caretCur: Caret?, dataContext: DataContext)  {
                     val lastValue = AtomicReference<String>()
                     editor.caretModel.runForEachCaret { caret ->
                         if (caret.isValid) {

@@ -9,7 +9,7 @@ import io.github.pursuewind.intellij.plugin.generate.MyEditorAction
 abstract class AbsConvertAction(convertFunc: (String) -> String) : MyEditorAction(null) {
     init {
         setupHandler(object : EditorWriteActionHandler(false) {
-            override fun executeWriteAction(editor: Editor, dataContext: DataContext) {
+            override fun executeWriteAction(editor: Editor, caret: Caret?, dataContext: DataContext)  {
                 editor.caretModel.runForEachCaret { caret ->
                     if (caret.isValid) {
                         val newText = chineseCheck(caret.selectedText ?: "", convertFunc)

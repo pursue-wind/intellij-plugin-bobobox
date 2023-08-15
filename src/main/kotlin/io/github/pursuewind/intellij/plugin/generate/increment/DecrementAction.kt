@@ -1,6 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.increment
 
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.CaretModel
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.SelectionModel
@@ -14,7 +15,7 @@ class DecrementAction (setupHandler: Boolean = true) : MyEditorAction(null) {
     init {
         if (setupHandler) {
             setupHandler(object : EditorWriteActionHandler(true) {
-                override fun executeWriteAction(editor: Editor, dataContext: DataContext) {
+                override fun executeWriteAction(editor: Editor, caret: Caret?, dataContext: DataContext)  {
 
                     // Column mode not supported
                     if (editor.isColumnMode) {

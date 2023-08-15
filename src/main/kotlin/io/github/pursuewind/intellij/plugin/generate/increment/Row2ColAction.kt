@@ -1,6 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.increment
 
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler
 import io.github.pursuewind.intellij.plugin.generate.MyEditorAction
@@ -15,7 +16,7 @@ import io.github.pursuewind.intellij.plugin.generate.MyEditorAction
 class Row2ColAction : MyEditorAction(null) {
     init {
         setupHandler(object : EditorWriteActionHandler(false) {
-            override fun executeWriteAction(editor: Editor, dataContext: DataContext) {
+            override fun executeWriteAction(editor: Editor, caret: Caret?, dataContext: DataContext)  {
                 val allCarets = editor.caretModel.allCarets
                 val selectedTexts = allCarets.mapNotNull { it.selectedText }
 
