@@ -23,6 +23,9 @@
 
     </extensions>
     <actions>
+        <action id="bobobox.SelectAllSameRegAction" class="io.github.pursuewind.intellij.plugin.generate.increment.SelectAllWithRegAction" text="SelectAllSameRegAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt K"/>
+        </action>
         <action id="bobobox.Row2ColAction" class="io.github.pursuewind.intellij.plugin.generate.increment.Row2ColAction" text="Row2ColAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt R"/>
         </action>
