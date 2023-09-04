@@ -3,7 +3,6 @@ package io.github.pursuewind.intellij.plugin.generate.getset
 import com.intellij.psi.*
 import com.intellij.psi.impl.source.PsiClassReferenceType
 import io.github.pursuewind.intellij.plugin.generate.AbsCodeGenerator
-import kotlin.properties.Delegates
 
 
 abstract class AbsGetSetCodeGenerator() : AbsCodeGenerator() {
@@ -21,11 +20,15 @@ abstract class AbsGetSetCodeGenerator() : AbsCodeGenerator() {
         psiClass: PsiClass,
         prefixList: List<String> = emptyList()
     ): List<PsiMethod> =
-        psiClass.methods.filter {
-            if (prefixList.isEmpty()) isValidMethod(it, methodPrefix.invoke()) else isValidMethod(it, prefixList)
-        } + (psiClass.superClass?.takeIf {
-            generateSuperClass() && (it.qualifiedName?.startsWith("java.")?.not() ?: false)
-        }?.let { generateMethodListByClass(it) } ?: emptyList())
+        (
+            psiClass.methods
+                .filter {
+                    if (prefixList.isEmpty()) isValidMethod(it, methodPrefix.invoke())
+                    else isValidMethod(it, prefixList)
+                } + (psiClass.superClass?.takeIf {
+                generateSuperClass() && (it.qualifiedName?.startsWith("java.")?.not() ?: false)
+            }?.let { generateMethodListByClass(it) } ?: emptySet())
+        ).distinctBy { it.name }
 
 
     fun psiType2PsiCls(psiType: PsiType): PsiClass? {
@@ -51,8 +54,6 @@ abstract class AbsGetSetCodeGenerator() : AbsCodeGenerator() {
         code.append(afterAppend())
         return code.toString()
     }
-
-
 
 
     fun checkGetMethodPrefix(method: PsiMethod): Boolean {
