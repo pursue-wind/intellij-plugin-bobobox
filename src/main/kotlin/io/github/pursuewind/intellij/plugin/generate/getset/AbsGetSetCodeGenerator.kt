@@ -8,8 +8,8 @@ import io.github.pursuewind.intellij.plugin.generate.AbsCodeGenerator
 abstract class AbsGetSetCodeGenerator() : AbsCodeGenerator() {
 
     protected open var method2Code: (PsiMethod) -> String = { "" }
-    protected open var generateSuperClass: () -> Boolean = { true }
-    protected open var methodPrefix: () -> List<String> = { listOf(SET_METHOD_PREFIX) }
+    protected open var generateSuperClass: Boolean = true
+    protected open var methodPrefix: List<String> = listOf(SET_METHOD_PREFIX)
 
     private fun isValidMethod(method: PsiMethod, prefixArray: List<String>) =
         method.hasModifierProperty(PsiModifier.PUBLIC) &&
@@ -23,10 +23,10 @@ abstract class AbsGetSetCodeGenerator() : AbsCodeGenerator() {
         (
             psiClass.methods
                 .filter {
-                    if (prefixList.isEmpty()) isValidMethod(it, methodPrefix.invoke())
+                    if (prefixList.isEmpty()) isValidMethod(it, methodPrefix)
                     else isValidMethod(it, prefixList)
                 } + (psiClass.superClass?.takeIf {
-                generateSuperClass() && (it.qualifiedName?.startsWith("java.")?.not() ?: false)
+                generateSuperClass && (it.qualifiedName?.startsWith("java.")?.not() ?: false)
             }?.let { generateMethodListByClass(it) } ?: emptySet())
         ).distinctBy { it.name }
 

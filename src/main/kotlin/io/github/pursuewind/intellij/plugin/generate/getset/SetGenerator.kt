@@ -65,7 +65,7 @@ abstract class AbsSetGenerator : AbsGetSetCodeGenerator() {
 object SetCodeGenerator : AbsSetGenerator()
 
 object SetNoSuperCodeGenerator : AbsSetGenerator() {
-    override var generateSuperClass: () -> Boolean = { false }
+    override var generateSuperClass: Boolean = false
 }
 
 object SetNoDefaultCodeGenerator : AbsSetGenerator() {
@@ -86,7 +86,8 @@ open class BuilderCodeGenerator : AbsSetGenerator() {
     override fun beforeAppend() = postfixData.psiElementName + ".builder()"
     override fun afterAppend() = "\n.build();"
     override var assemble: (String, String) -> String = { method, args -> "$method($args)" }
-    override fun generateSetMethodStr(): String = "\n.${_method.name.replace(SET_METHOD_PREFIX, "").firstCharToLowerCase()}"
+    override fun generateSetMethodStr(): String =
+        "\n.${_method.name.replace(SET_METHOD_PREFIX, "").firstCharToLowerCase()}"
 }
 
 

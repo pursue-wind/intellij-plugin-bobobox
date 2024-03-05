@@ -1,6 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.util
 
 import com.google.gson.Gson
+import com.intellij.ide.plugins.marketplace.setHeadersViaTuner
 import com.intellij.openapi.util.SystemInfoRt
 import com.intellij.util.io.HttpRequests
 import com.intellij.util.io.RequestBuilder

@@ -26,7 +26,7 @@ class GenerateBuilder : AbsVariableGenerateTemplate(PostfixEnum.BUILDER, { check
                 return when (psiElement.tokenType) {
                     RPARENTH -> psiElement.getParent()?.prevSibling?.lastChild?.text == "builder"
                     SEMICOLON -> psiElement.getPrevSibling()?.firstChild?.lastChild?.text == "builder"
-//                    IDENTIFIER -> psiElement.text != null && psiElement.parent is PsiReferenceExpression
+                    // IDENTIFIER -> psiElement.text != null && psiElement.parent is PsiReferenceExpression
                     else -> false
                 }
             } else if (psiElement is PsiReferenceExpression) {

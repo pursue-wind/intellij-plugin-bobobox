@@ -2,6 +2,8 @@ package io.github.pursuewind.intellij.plugin.generate.trans
 
 import io.github.pursuewind.intellij.plugin.generate.util.Http
 import io.github.pursuewind.intellij.plugin.generate.AbsCodeGenerator
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 
 
 // 下划线转驼峰 Underline to CamelCase _cc
@@ -58,21 +60,25 @@ object UlCodeGenerator : AbsCodeGenerator() {
 }
 
 
-data class YuoDaoTranslation(
+data class TranslationResponse(
+    val from: String,
+    val to: String,
+    val trans_result: List<Translation>
+)
+
+data class Translation(
     val src: String,
-    val tgt: String
+    val dst: String
 )
 
-data class YuoDaoTranslationResponse(
-    val type: String,
-    val errorCode: Int,
-    val elapsedTime: Int,
-    val translateResult: List<List<YuoDaoTranslation>>
-)
-
+var api = TransApi("20220520001222370", "xxx")
 
 fun youDaoRequest(chinese: String): String {
-    val url = "http://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${chinese}"
-    val resp = Http.get<YuoDaoTranslationResponse>(url)
-    return if (resp.errorCode == 0) resp.translateResult.first().first().tgt else ""
+    val url = api.buildUrl(chinese)
+    val f = CompletableFuture.supplyAsync {
+        return@supplyAsync Http.get<TranslationResponse>(url)
+    }
+
+    val resp = f.get(2, TimeUnit.SECONDS)
+    return resp?.trans_result?.first()?.dst ?: ""
 }
