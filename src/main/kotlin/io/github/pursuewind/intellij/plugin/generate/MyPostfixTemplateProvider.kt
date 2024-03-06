@@ -39,7 +39,7 @@ class GeneratePostfixTemplateProvider : BasePostfixTemplateProvider() {
         GenerateSetterNoSuper(),
         GenerateBuilder(),
         GenerateGetSet(),
-        //
+        // 驼峰下划线转换
         ToCamelCaseTemplate(),
         ToUnderscoreTemplate(),
     )

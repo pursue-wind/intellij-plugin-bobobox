@@ -16,11 +16,7 @@ abstract class AbsCodeGenerator : CodeGenerator {
         action()
     } catch (throwable: Throwable) {
         throwable.printStackTrace()
-        onError(throwable)
-    }
-
-    private fun onError(throwable: Throwable): Nothing {
-        throw Exception()
+        throw throwable
     }
 
     protected open fun beforeAppend() = ""

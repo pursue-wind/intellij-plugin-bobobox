@@ -1,5 +1,6 @@
 package io.github.pursuewind.intellij.plugin.generate.trans
 
+import com.google.gson.Gson
 import io.github.pursuewind.intellij.plugin.generate.util.Http
 import io.github.pursuewind.intellij.plugin.generate.AbsCodeGenerator
 import java.util.concurrent.CompletableFuture
@@ -61,6 +62,8 @@ object UlCodeGenerator : AbsCodeGenerator() {
 
 
 data class TranslationResponse(
+    val error_code: String?,
+    val error_msg: String?,
     val from: String,
     val to: String,
     val trans_result: List<Translation>
@@ -80,5 +83,5 @@ fun youDaoRequest(chinese: String): String {
     }
 
     val resp = f.get(2, TimeUnit.SECONDS)
-    return resp?.trans_result?.first()?.dst ?: ""
+    return if (resp.error_code == null) resp?.trans_result?.first()?.dst.orEmpty() else ""
 }
