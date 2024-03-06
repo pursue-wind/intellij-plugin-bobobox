@@ -49,7 +49,7 @@
 
 ### Generate Log
 #### Usage (postfix)
-- _log 
+- _log
 - _logw
 - _loge
 - _logd

@@ -1,13 +1,19 @@
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.intellij.tasks.RunPluginVerifierTask
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 fun properties(key: String) = project.findProperty(key).toString()
 fun properties2(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
+fun dateValue(pattern: String): String = LocalDate.now(ZoneId.of("Asia/Shanghai")).format(DateTimeFormatter.ofPattern(pattern))
+val pluginVersion: Provider<String> = properties2("pluginMajorVersion")
 
 plugins {
     id("org.jetbrains.intellij") version "1.13.3"
-    id("org.jetbrains.changelog") version "2.0.0"
-    kotlin("jvm") version "1.7.10"
+    id("org.jetbrains.changelog") version "2.2.0"
+    kotlin("jvm") version "1.9.20"
 
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "0.1.13"
@@ -43,12 +49,30 @@ kotlin {
     }
 }
 
+repositories {
+    mavenLocal()
+    maven(url = "https://maven.aliyun.com/repository/public")
+    maven(url = "https://maven-central.storage-download.googleapis.com/repos/central/data/")
+    maven(url = "https://www.jetbrains.com/intellij-repository/releases")
+    maven(url = "https://jitpack.io")
+    mavenCentral()
+}
+
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.0")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("org.projectlombok:lombok:1.18.26")
     implementation("com.google.code.gson:gson:2.10.1")
 }
+
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+changelog {
+    header = provider { "${version.get()} (${dateValue("yyyy/MM/dd")})" }
+    groups.empty()
+    repositoryUrl = properties("pluginRepositoryUrl")
+}
+
 tasks {
     wrapper {
         gradleVersion = properties("gradleVersion")
@@ -62,35 +86,26 @@ tasks {
         version.set(properties("pluginVersion"))
         sinceBuild.set(properties("pluginSinceBuild"))
         untilBuild.set(properties("pluginUntilBuild"))
+        pluginDescription = projectDir.resolve("DESCRIPTION.md").readText()
+                .let { org.jetbrains.changelog.markdownToHTML(it) }
 
-        val myReadMe = file("README.md").readText()
+        // local variable for configuration cache compatibility
+        val changelog = project.changelog
+        // Get the latest available change notes from the changelog file
+        changeNotes = pluginVersion.map { pluginVersion ->
+            with(changelog) {
+                renderItem(
+                        (getOrNull(pluginVersion) ?: getUnreleased())
+                                .withHeader(false)
+                                .withEmptySections(false),
+                        Changelog.OutputType.HTML
+                )
+            }
+        }
+    }
 
-        // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
-        pluginDescription.set(
-                myReadMe.lines().run {
-                    val start = "<!-- Plugin description -->"
-                    val end = "<!-- Plugin description end -->"
-
-                    if (!containsAll(listOf(start, end))) {
-                        throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
-                    }
-                    subList(indexOf(start) + 1, indexOf(end))
-                }.joinToString("\n")
-                        .replace("example.png", "mini_example.png")
-                        .let { org.jetbrains.changelog.markdownToHTML(it) }
-        )
-
-        changeNotes.set(
-                myReadMe.lines().run {
-                    val start = "<!-- Change notes -->"
-                    val end = "<!-- Change notes end -->"
-
-                    if (!containsAll(listOf(start, end))) {
-                        throw GradleException("Change notes section not found in README.md:\n$start ... $end")
-                    }
-                    subList(indexOf(start) + 1, indexOf(end))
-                }.joinToString("\n") { it.replace("* ", "\n") }
-                        .let { org.jetbrains.changelog.markdownToHTML(it) }
-        )
+    // Validate plugin starting from version 2022.3.3 to save disk space
+    listProductsReleases {
+        sinceVersion = "2022.3.3"
     }
 }
