@@ -49,30 +49,30 @@
 
 ### Generate Log
 #### Usage (postfix)
-- _log 
-- _logw
-- _loge
-- _logd
-- _logt
+- `_log` Generate log.info code.
+- `_logw` Generate log.warn code.
+- `_loge` Generate log.error code.
+- `_logd` Generate log.debug code.
+- `_logt` Generate log.trace code.
 
 ![log](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/bbda7f9d-db5e-4640-a914-8a4aa1870650)
 
 ### Generate Set Methods
 #### Usage (postfix)
-- _get 生成所有get方法
-- _gets 生成不包括父类的所有get方法
+- `_get` Generate all get methods.
+- `_gets` The build does not include all get methods of the parent class.
 
 ![set](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/84a57115-4155-4122-a0ea-72a6aee9ac5e)
 
 ### Generate Get Methods
 #### Usage (postfix)
-- _set (generates all set methods)
-- _sets (generates all set methods excluding those from the parent class)
-- _setn (generates all set methods without default values)
-- _setc (generates all set methods in lombok chain style)
-- _build (generates all build methods)
-- _buildn (generates all build methods without default values)
-- _gset (generates both get and set methods)
+- `_set` generates all set methods.
+- `_sets` generates all set methods excluding those from the parent class.
+- `_setn` generates all set methods without default values.
+- `_setc` generates all set methods in lombok chain style.
+- `_build` generates all build methods.
+- `_buildn` generates all build methods without default values.
+- `_gset` generates both get and set methods.
 
 ![get](https://github.com/pursue-wind/intellij-plugin-bobobox/assets/40025981/d9b9b4ed-21e0-40e2-a943-0f279cf7e263)
 
