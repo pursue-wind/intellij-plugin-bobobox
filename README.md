@@ -1,4 +1,4 @@
-# ![BoboBox](https://plugins.jetbrains.com/plugin/22661-bobobox/)
+# [BoboBox](https://plugins.jetbrains.com/plugin/22661-bobobox/)
 
 Search for BoboBox in IDEA's plugin repository and download it.
 
