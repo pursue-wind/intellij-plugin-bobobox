@@ -1,4 +1,7 @@
-# Generator
+# ![BoboBox](https://plugins.jetbrains.com/plugin/22661-bobobox/)
+
+Search for BoboBox in IDEA's plugin repository and download it.
+
 ### Row to Column
 #### Usage (Shortcut)
 - <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>
