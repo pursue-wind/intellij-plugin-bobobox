@@ -1,4 +1,5 @@
-# Generator
+# [BoboBox](https://plugins.jetbrains.com/plugin/22661-bobobox/)
+IDEA的插件仓库搜索 **BoboBox** 下载
 
 ### 行转列
 #### 使用方式（快捷键）
