@@ -9,6 +9,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.javascript</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup displayType="BALLOON" id="Setter Postfix Tip" bundle="group"
@@ -18,6 +19,8 @@
 
         <codeInsight.template.postfixTemplateProvider language="JAVA"
                                                       implementationClass="io.github.pursuewind.intellij.plugin.generate.GeneratePostfixTemplateProvider"/>
+        <codeInsight.template.postfixTemplateProvider language="TypeScript"
+                                                      implementationClass="io.github.pursuewind.intellij.plugin.generate.GeneratePostfixTemplateProvider"/>
         <codeInsight.template.postfixTemplateProvider language="JAVA"
                                                       implementationClass="io.github.pursuewind.intellij.plugin.generate.LogPostfixTemplateProvider"/>
 
@@ -25,27 +28,35 @@
     <actions>
         <action id="bobobox.SelectAllSameRegAction" class="io.github.pursuewind.intellij.plugin.generate.increment.SelectAllWithRegAction" text="SelectAllSameRegAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt K"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt K"/>
         </action>
         <action id="bobobox.Row2ColAction" class="io.github.pursuewind.intellij.plugin.generate.increment.Row2ColAction" text="Row2ColAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt R"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt R"/>
         </action>
         <action id="bobobox.CreateSequenceAction" class="io.github.pursuewind.intellij.plugin.generate.increment.CreateSequenceAction" text="CreateSequenceAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt G"/>
         </action>
         <action id="bobobox.IncrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.IncrementAction" text="IncrementAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt UP"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt UP"/>
         </action>
         <action id="bobobox.DecrementAction" class="io.github.pursuewind.intellij.plugin.generate.increment.DecrementAction" text="DecrementAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt DOWN"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt DOWN"/>
         </action>
         <action id="bobobox.ToCamelCaseAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToCamelCaseAction" text="ToCamelCaseAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt Y"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt Y"/>
         </action>
         <action id="bobobox.ToUnderscoreAction" class="io.github.pursuewind.intellij.plugin.generate.trans.ToUnderscoreAction" text="ToUnderscoreAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt U"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt U"/>
         </action>
         <action id="bobobox.JustTransAction" class="io.github.pursuewind.intellij.plugin.generate.trans.JustTransAction" text="JustTransAction">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 7"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="cmd alt 7"/>
         </action>
     </actions>
 </idea-plugin>

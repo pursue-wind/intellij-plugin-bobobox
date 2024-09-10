@@ -1,5 +1,7 @@
 package io.github.pursuewind.intellij.plugin.generate.getset
 
+import com.intellij.lang.javascript.psi.JSReferenceExpression
+import com.intellij.lang.javascript.psi.impl.JSReferenceSetElement
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.*
 import com.intellij.psi.search.GlobalSearchScope
@@ -73,6 +75,14 @@ class PostfixData() {
             }
 
             is PsiIdentifier -> {
+                return psiElement.text to PsiType.getTypeByName(
+                    psiElement.text,
+                    psiElement.project,
+                    GlobalSearchScope.allScope(psiElement.project)
+                )
+            }
+
+            is JSReferenceExpression -> {
                 return psiElement.text to PsiType.getTypeByName(
                     psiElement.text,
                     psiElement.project,

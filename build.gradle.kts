@@ -11,7 +11,7 @@ fun dateValue(pattern: String): String = LocalDate.now(ZoneId.of("Asia/Shanghai"
 val pluginVersion: Provider<String> = properties2("pluginMajorVersion")
 
 plugins {
-    id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.intellij") version "1.17.3"
     id("org.jetbrains.changelog") version "2.2.0"
     kotlin("jvm") version "1.9.20"
 
@@ -29,9 +29,11 @@ repositories {
 }
 
 intellij {
-    pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
-    type.set(properties("platformType"))
+    localPath.set("/Users/a01/Applications/IntelliJ IDEA Ultimate.app/Contents")
+
+//    pluginName.set(properties("pluginName"))
+//    version.set(properties("platformVersion"))
+//    type.set(properties("platformType"))
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins.set(properties2("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) })
@@ -74,6 +76,11 @@ changelog {
 }
 
 tasks {
+    patchPluginXml {
+        sinceBuild.set("231")
+        untilBuild.set("242.*")
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion")
     }

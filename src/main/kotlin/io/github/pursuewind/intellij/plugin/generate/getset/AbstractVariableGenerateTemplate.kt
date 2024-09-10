@@ -4,6 +4,8 @@ import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.codeInsight.template.postfix.templates.PostfixTemplateExpressionSelectorBase
 import com.intellij.codeInsight.template.postfix.templates.PostfixTemplateWithExpressionSelector
 import com.intellij.codeInsight.template.postfix.util.JavaPostfixTemplatesUtils
+import com.intellij.lang.javascript.psi.JSReferenceExpression
+import com.intellij.lang.javascript.psi.ecma6.TypeScriptFunction
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.util.Condition
@@ -91,7 +93,10 @@ abstract class AbsPostfixTemplate(
     protected abstract fun doExpandForChooseExpression(postfixData: PostfixData)
 
     protected fun removeExpressionFromEditor(expression: PsiElement, editor: Editor) {
-        if (expression is PsiJavaCodeReferenceElement || expression is PsiIdentifier) {
+        if (expression is PsiJavaCodeReferenceElement
+            || expression is PsiIdentifier
+            || expression is JSReferenceExpression
+        ) {
             editor.document.deleteString(expression.textRange.startOffset, expression.textRange.endOffset)
             return
         }
